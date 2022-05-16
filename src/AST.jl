@@ -111,10 +111,10 @@ end
 Calculates AST reward from MDP, sample, and before/after distances.
 """
 function reward(mdp::ASTMDP, sample::EnvironmentSample, ds::NTuple{2,<:Real})
-	r = logprob(sample)
-	r += isevent(mdp.sim) ? mdp.reward_bonus : 0.0
-	r += ds[1] - ds[2]
-	return r
+	r_prob = logprob(sample)
+	r_event = isevent(mdp.sim) ? mdp.reward_bonus : 0.0
+	r_distance = ds[1] - ds[2]
+	return [r_prob, r_event, r_distance]
 end
 
 """
